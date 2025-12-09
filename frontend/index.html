@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IaC Factory - Visual Infrastructure Designer</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1>IaC Factory</h1>
+            <div class="toolbar">
+                <button id="save-btn" class="btn">Save</button>
+                <button id="load-btn" class="btn">Load</button>
+                <button id="generate-btn" class="btn btn-primary">Generate Code</button>
+            </div>
+        </header>
+        
+        <div class="main-container">
+            <!-- Component Palette -->
+            <aside class="palette">
+                <h3>Components</h3>
+                <div class="palette-section">
+                    <h4>Gateway</h4>
+                    <div class="component-item" draggable="true" data-type="Gateway">
+                        <span class="icon">🌐</span>
+                        <span>Gateway</span>
+                    </div>
+                </div>
+                <div class="palette-section">
+                    <h4>Process</h4>
+                    <div class="component-item" draggable="true" data-type="Container">
+                        <span class="icon">📦</span>
+                        <span>Container</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="Lambda">
+                        <span class="icon">λ</span>
+                        <span>Lambda</span>
+                    </div>
+                </div>
+                <div class="palette-section">
+                    <h4>Store</h4>
+                    <div class="component-item" draggable="true" data-type="Cache">
+                        <span class="icon">⚡</span>
+                        <span>Cache</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="Rdms">
+                        <span class="icon">🗄️</span>
+                        <span>Database</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="Archive">
+                        <span class="icon">📚</span>
+                        <span>Archive</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Canvas -->
+            <main class="canvas-container">
+                <svg id="canvas" width="100%" height="100%">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                                refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+                        </marker>
+                    </defs>
+                    <g id="connections"></g>
+                    <g id="components"></g>
+                </svg>
+                <div id="connection-mode-indicator" class="hidden">
+                    Connection Mode: Click source, then destination
+                </div>
+            </main>
+            
+            <!-- Properties Panel -->
+            <aside class="properties-panel">
+                <h3>Properties</h3>
+                <div id="properties-content">
+                    <p class="placeholder">Select a component or connection to edit properties</p>
+                </div>
+            </aside>
+        </div>
+        
+        <!-- Code Viewer Modal -->
+        <div id="code-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Generated Code</h2>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="mermaid">Mermaid</button>
+                        <button class="tab-btn" data-tab="pulumi">Pulumi</button>
+                        <button class="tab-btn" data-tab="cdk">CDK</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="mermaid-tab" class="tab-pane active">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code id="mermaid-code"></code></pre>
+                        </div>
+                        <div id="pulumi-tab" class="tab-pane hidden">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code id="pulumi-code"></code></pre>
+                        </div>
+                        <div id="cdk-tab" class="tab-pane hidden">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code id="cdk-code"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>
